@@ -1,17 +1,41 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Home from "./views/Home.vue";
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: "history",
   base: process.env.BASE_URL,
   routes: [
     {
       path: "/",
-      name: "home",
-      component: Home
+      component: () =>
+        import(/* webpackChunkName: "layout" */ "./layouts/BasicLayout.vue")
+    },
+    {
+      path: "/user",
+      component: () =>
+        import(/* webpackChunkName: "layout" */ "./layouts/UserLayout.vue"),
+      children: [
+        {
+          path: "/user",
+          redirect: "/user/login"
+        },
+        {
+          path: "/user/login",
+          name: "login",
+          component: () =>
+            import(/* webpackChunkName: "user" */ "./views/User/Login.vue")
+        },
+        {
+          path: "/user/register",
+          name: "register",
+          component: () =>
+            import(/* webpackChunkName: "user" */ "./views/User/Register.vue")
+        }
+      ]
     },
     {
       path: "/about",
@@ -24,3 +48,14 @@ export default new Router({
     }
   ]
 });
+
+router.beforeEach((to, form, next) => {
+  NProgress.start();
+  next();
+});
+
+router.afterEach(() => {
+  NProgress.done();
+});
+
+export default router;
