@@ -4,8 +4,8 @@ import About from "./views/About";
 import Vue from "vue";
 
 /*
- * router 实现
- * 1.实现插件  2.url监听变化 3.路由解析配置  4.实现全局组件 router-link router-view
+ * index 实现
+ * 1.实现插件  2.url监听变化 3.路由解析配置  4.实现全局组件 index-link index-view
  * */
 
 //如何让他成为一个插件呢 实现一个install方法
@@ -41,7 +41,7 @@ class VueRouter {
     });
   }
   initComponent() {
-    //  全局注册组件 Vue  <router-link to=''>fff</router-link>
+    //  全局注册组件 Vue  <index-link to=''>fff</index-link>
     Vue.component("router-link", {
       props: { to: String },
       render(h) {
@@ -52,7 +52,7 @@ class VueRouter {
         ]);
       }
     });
-    //router-view
+    //index-view
     Vue.component("router-view", {
       //this 当前router的实例
       render: h => {
@@ -70,7 +70,7 @@ VueRouter.install = function(Vue) {
     beforeCreate() {
       //this 是vue实例  这个option就拿出了我们 main.js里面的值
       if (this.$options.router) {
-        //仅在根组件执行一次 以后自组件在创建实例的时候 都有$router 这就是为什么我们可以在每个组件使用 重定向 导航
+        //仅在根组件执行一次 以后自组件在创建实例的时候 都有$index 这就是为什么我们可以在每个组件使用 重定向 导航
         Vue.prototype.$router = this.$options.router;
         this.$options.router.init();
       }
@@ -81,7 +81,6 @@ VueRouter.install = function(Vue) {
 Vue.use(VueRouter);
 
 const router = new VueRouter({
-  mode: "hash",
   base: process.env.BASE_URL,
   routes: [
     {
@@ -96,12 +95,12 @@ const router = new VueRouter({
   ]
 });
 
-// router.beforeEach((to, form, next) => {
+// index.beforeEach((to, form, next) => {
 //   NProgress.start();
 //   next();
 // });
 //
-// router.afterEach(() => {
+// index.afterEach(() => {
 //   NProgress.done();
 // });
 

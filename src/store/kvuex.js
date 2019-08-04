@@ -46,10 +46,11 @@ class Store {
 function install(_Vue) {
   Vue = _Vue;
 
-  //什么时候需要混入  就是你需要当前组件的实例的时候
+  // 什么时候需要混入  就是你需要当前组件的实例的时候
   // 不需要混入也行 Vue.prototype.$store= this.$options.store
   Vue.mixin({
     beforeCreate() {
+      // 这个this就是 new Vue的结果
       if (this.$options.store) {
         Vue.prototype.$store = this.$options.store;
       }

@@ -1,25 +1,17 @@
 <template>
-  <div>
-    <Header></Header>
-    <SideMenu></SideMenu>
-    <router-view></router-view>
-    <Footer></Footer>
+  <div class="app-wrapper">
+    <sidebar class="sidebar-container" />
+    <div class="main-container">
+      <router-view />
+    </div>
   </div>
 </template>
-
 <script>
-import Header from "./Header";
-import Footer from "./Footer";
-import SideMenu from "./SideMenu";
+import Sidebar from "@/components/Sidebar";
 
 export default {
-  name: "BasicLayout",
   components: {
-    Header,
-    Footer,
-    SideMenu
+    Sidebar
   }
 };
 </script>
-
-<style scoped></style>
